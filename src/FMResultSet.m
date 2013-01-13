@@ -300,7 +300,20 @@
         return nil;
     }
     
-    return [NSString stringWithUTF8String:c];
+    //return [NSString stringWithUTF8String:c];
+	//return [NSString stringWithCString:c encoding:NSMacOSRomanStringEncoding];
+	
+	int clen = strlen(c)+1;
+	char newc[clen];
+	for (int i = 0; i < strlen(c); i++) {
+		newc[i] = c[i];
+		if (newc[i] == '\v') {
+			newc[i] = '\n';
+		}
+	}
+	newc[clen-1] = '\0';
+	
+	return [NSString stringWithFormat:@"%s", newc];
 }
 
 - (NSString*)stringForColumn:(NSString*)columnName {
