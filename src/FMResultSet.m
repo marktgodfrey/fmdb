@@ -300,9 +300,6 @@
         return nil;
     }
     
-    //return [NSString stringWithUTF8String:c];
-	//return [NSString stringWithCString:c encoding:NSMacOSRomanStringEncoding];
-	
 	int clen = strlen(c)+1;
 	char newc[clen];
 	for (int i = 0; i < strlen(c); i++) {
@@ -313,7 +310,12 @@
 	}
 	newc[clen-1] = '\0';
 	
-	return [NSString stringWithFormat:@"%s", newc];
+	NSString* newStr = [NSString stringWithUTF8String:newc];
+	if (!newStr) {
+		//if there's a problem with the encoding...  like for "I’m Going Home"... ugh
+		newStr = [NSString stringWithFormat:@"%s", newc];
+	}
+	return newStr;
 }
 
 - (NSString*)stringForColumn:(NSString*)columnName {
