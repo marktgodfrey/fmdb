@@ -300,7 +300,7 @@
         return nil;
     }
     
-	int clen = strlen(c)+1;
+	size_t clen = strlen(c)+1;
 	char newc[clen];
 	for (int i = 0; i < strlen(c); i++) {
 		newc[i] = c[i];
